@@ -1,4 +1,5 @@
 import 'package:aptech_e_project/Home/MainHome.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,18 @@ class TpoNotifications extends StatefulWidget {
 }
 
 class _TpoNotificationsState extends State<TpoNotifications> {
+
+  TextEditingController notificationCtrl = TextEditingController();
+
+  saveData() {
+    final DatabaseReference database =
+    FirebaseDatabase.instance.reference();
+    String notification = notificationCtrl.text;
+    database.child("Notifications").set({
+      "notice": notification,
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +64,7 @@ class _TpoNotificationsState extends State<TpoNotifications> {
                 height: 60,
                 child: Card(
                   child: CupertinoTextField(
+                    controller: notificationCtrl,
                     autocorrect: true,
                     placeholder: "Enter Notification here",
                     enableSuggestions: true,
@@ -76,7 +90,8 @@ class _TpoNotificationsState extends State<TpoNotifications> {
                 color: Colors.pink,
                 child: CupertinoButton(
                   onPressed: (){
-                    setState(() {});
+                    saveData();
+                    notificationCtrl.clear();
                   },
                   color: Colors.pink,
                   child:Container(

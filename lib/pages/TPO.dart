@@ -17,21 +17,15 @@ class _TPOState extends State<TPO> {
   TextEditingController passCtrl = TextEditingController();
 
   saveData(){
-    final DatabaseReference database = FirebaseDatabase.instance.reference().child("user");
+    final DatabaseReference database = FirebaseDatabase.instance.reference();
     String id = idCtrl.text;
     String name = namelCtrl.text;
     String password = passCtrl.text;
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: name, password: password).then((value){
-      database.child(value.user.uid).set({
-        "id":value.user.uid,
+     database.child("New TPO").set({
+        "id":id,
         "name":name,
         "password":password
       });
-     // FirebaseAuth.instance.signInWithEmailAndPassword(email: "admin@gmail.com", password: "admin123");
-    });
-
-
-
   }
   @override
   Widget build(BuildContext context) {
@@ -152,6 +146,9 @@ class _TPOState extends State<TPO> {
                       onPressed: (){
                         setState(() {
                           saveData();
+                          idCtrl.clear();
+                          passCtrl.clear();
+                          namelCtrl.clear();
                         });
                       },
                       color: Colors.pink,
@@ -161,7 +158,8 @@ class _TPOState extends State<TPO> {
                     ),
                   ),
                 ),
-              )
+              ),
+
             ],
           )
         ],

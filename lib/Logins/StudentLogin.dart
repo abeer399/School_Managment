@@ -43,7 +43,6 @@ class _StudentLoginState extends State<StudentLogin> {
         error = "";
       });
       var auth = FirebaseAuth.instance;
-
       var response = await auth.signInWithEmailAndPassword(
           email: emailCtrl.text, password: passCtrl.text);
       checkUser();

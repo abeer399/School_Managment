@@ -14,34 +14,32 @@ class _CompanyState extends State<Company> {
   TextEditingController detailCtrl = TextEditingController();
   TextEditingController jobdescriptionCtrl = TextEditingController();
 
-
-  saveData(){
-    final DatabaseReference database = FirebaseDatabase.instance.reference().child("student");
+  saveData() {
+    final DatabaseReference database =
+        FirebaseDatabase.instance.reference();
     String jobdescription = jobdescriptionCtrl.text;
     String companydetail = detailCtrl.text;
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: companydetail, password: jobdescription).then((value){
-      database.child(value.user.uid).set({
-        "id":value.user.uid,
-      "jobdescription":jobdescription,
-        "companydetail":companydetail,
-      });
-      // FirebaseAuth.instance.signInWithEmailAndPassword(email: "admin@gmail.com", password: "admin123");
+    database.child("jobs").set({
+      "jobdescription": jobdescription,
+      "companydetail": companydetail,
     });
-
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("COMPANY",style: TextStyle(fontFamily: "Montserret",fontWeight: FontWeight.bold),),
+        title: Text(
+          "COMPANY",
+          style:
+              TextStyle(fontFamily: "Montserret", fontWeight: FontWeight.bold),
+        ),
         actions: <Widget>[
           GestureDetector(
-            onTap: (){navigate(context, MainHome());},
+            onTap: () {
+              navigate(context, MainHome());
+            },
             child: Icon(Icons.exit_to_app),
           )
         ],
@@ -53,18 +51,25 @@ class _CompanyState extends State<Company> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsetsDirectional.only(start: 20,top: 30),
+                padding: EdgeInsetsDirectional.only(start: 20, top: 30),
                 child: Container(
-                  child: Text("COMPANY FORM",style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold,fontFamily: "Montserrat"),),
+                  child: Text(
+                    "COMPANY FORM",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Montserrat"),
+                  ),
                 ),
               ),
               Container(
-                padding: EdgeInsetsDirectional.only(top: 30,start: 30),
+                padding: EdgeInsetsDirectional.only(top: 30, start: 30),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
-                    width: getScreenSize(context).width-60,
-                    height:150,
+                    width: getScreenSize(context).width - 60,
+                    height: 150,
                     child: Card(
                       child: CupertinoTextField(
                         controller: detailCtrl,
@@ -74,24 +79,24 @@ class _CompanyState extends State<Company> {
                         enableSuggestions: true,
                         maxLines: 8,
                         style: TextStyle(
-                            color: Colors.white,
+                          color: Colors.white,
                         ),
                         placeholderStyle: TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
                         ),
-                        padding: EdgeInsetsDirectional.only(start: 15,top: 15),
+                        padding: EdgeInsetsDirectional.only(start: 15, top: 15),
                       ),
                     ),
                   ),
                 ),
               ),
               Container(
-                padding: EdgeInsetsDirectional.only(top: 20,start: 30),
+                padding: EdgeInsetsDirectional.only(top: 20, start: 30),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
-                    width: getScreenSize(context).width-60,
+                    width: getScreenSize(context).width - 60,
                     height: 150,
                     child: Card(
                       child: CupertinoTextField(
@@ -100,34 +105,37 @@ class _CompanyState extends State<Company> {
                         placeholder: "Enter Job detail here",
                         enableSuggestions: true,
                         maxLines: 8,
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
+                        style: TextStyle(color: Colors.white),
                         placeholderStyle: TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
                         ),
-                        padding: EdgeInsetsDirectional.only(start: 15,top: 15),
+                        padding: EdgeInsetsDirectional.only(start: 15, top: 15),
                       ),
                     ),
                   ),
                 ),
               ),
               Container(
-                padding: EdgeInsetsDirectional.only(top: 20,start: 97),
+                padding: EdgeInsetsDirectional.only(top: 20, start: 97),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Container(
                     color: Colors.pink,
                     child: CupertinoButton(
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           saveData();
+                          detailCtrl.clear();
+                          jobdescriptionCtrl.clear();
                         });
                       },
                       color: Colors.pink,
-                      child:Container(
-                        child: Text("ADD",style: TextStyle(color: Colors.white),),
+                      child: Container(
+                        child: Text(
+                          "ADD",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
@@ -137,7 +145,6 @@ class _CompanyState extends State<Company> {
           )
         ],
       ),
-
     );
   }
 }

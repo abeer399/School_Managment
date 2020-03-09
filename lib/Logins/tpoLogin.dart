@@ -43,6 +43,7 @@ class _TpoLoginState extends State<TpoLogin> {
         error = "";
       });
       var auth = FirebaseAuth.instance;
+      print(emailCtrl.text);
 
       var response = await auth.signInWithEmailAndPassword(
           email: emailCtrl.text, password: passCtrl.text);

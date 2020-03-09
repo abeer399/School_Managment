@@ -1,5 +1,4 @@
 import 'package:aptech_e_project/Home/MainHome.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,45 +12,46 @@ class StudentsForm extends StatefulWidget {
 
 class _StudentsFormState extends State<StudentsForm> {
   TextEditingController idCtrl = TextEditingController();
-  TextEditingController namelCtrl = TextEditingController();
+  TextEditingController nameCtrl = TextEditingController();
   TextEditingController branchCtrl = TextEditingController();
   TextEditingController percentCtrl = TextEditingController();
 
-  saveData(){
-    final DatabaseReference database = FirebaseDatabase.instance.reference().child("student");
+  saveData() {
+    final DatabaseReference database = FirebaseDatabase.instance.reference();
     String id = idCtrl.text;
-    String name = namelCtrl.text;
+    String name = nameCtrl.text;
     String branch = branchCtrl.text;
     String percentage = percentCtrl.text;
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: name, password: branch).then((value){
-      database.child(value.user.uid).set({
-        "id":value.user.uid,
-        "name":name,
-        "password":branch,
-        "percentage":percentage
-      });
-      // FirebaseAuth.instance.signInWithEmailAndPassword(email: "admin@gmail.com", password: "admin123");
+    database.child("Student Performance").set({
+      "id": id,
+      "name": name,
+      "password": branch,
+      "percentage": percentage
     });
-
-
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         elevation: 20,
         centerTitle: true,
-        title: Text("Student Form",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,fontFamily: "Montserrat"),),
+        title: Text(
+          "Student Form",
+          style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              fontFamily: "Montserrat"),
+        ),
         actions: <Widget>[
           GestureDetector(
-            onTap: (){navigate(context, MainHome());},
+            onTap: () {
+              navigate(context, MainHome());
+            },
             child: Icon(Icons.exit_to_app),
           )
         ],
       ),
-
       body: ListView(
         children: <Widget>[
           Column(
@@ -59,26 +59,31 @@ class _StudentsFormState extends State<StudentsForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsetsDirectional.only(start: 20,top: 30),
+                padding: EdgeInsetsDirectional.only(start: 20, top: 30),
                 child: Container(
-                  child: Text("STUDENT FORM",style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold,fontFamily: "Montserrat"),),
+                  child: Text(
+                    "STUDENT FORM",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Montserrat"),
+                  ),
                 ),
               ),
               Container(
-                padding: EdgeInsetsDirectional.only(top: 20,start: 30),
+                padding: EdgeInsetsDirectional.only(top: 20, start: 30),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
-                    width: getScreenSize(context).width-60,
+                    width: getScreenSize(context).width - 60,
                     height: 60,
                     child: Card(
                       child: CupertinoTextField(
                         placeholder: "Enter Name here",
-                        controller: namelCtrl,
+                        controller: nameCtrl,
                         enableSuggestions: true,
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
+                        style: TextStyle(color: Colors.white),
                         placeholderStyle: TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
@@ -90,11 +95,11 @@ class _StudentsFormState extends State<StudentsForm> {
                 ),
               ),
               Container(
-                padding: EdgeInsetsDirectional.only(top: 30,start: 30),
+                padding: EdgeInsetsDirectional.only(top: 30, start: 30),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
-                    width: getScreenSize(context).width-60,
+                    width: getScreenSize(context).width - 60,
                     height: 60,
                     child: Card(
                       child: CupertinoTextField(
@@ -103,9 +108,7 @@ class _StudentsFormState extends State<StudentsForm> {
                         keyboardType: TextInputType.number,
                         placeholder: "Enter ID here",
                         enableSuggestions: true,
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
+                        style: TextStyle(color: Colors.white),
                         placeholderStyle: TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
@@ -117,11 +120,11 @@ class _StudentsFormState extends State<StudentsForm> {
                 ),
               ),
               Container(
-                padding: EdgeInsetsDirectional.only(top: 20,start: 30),
+                padding: EdgeInsetsDirectional.only(top: 20, start: 30),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
-                    width: getScreenSize(context).width-60,
+                    width: getScreenSize(context).width - 60,
                     height: 60,
                     child: Card(
                       child: CupertinoTextField(
@@ -130,9 +133,7 @@ class _StudentsFormState extends State<StudentsForm> {
                         keyboardType: TextInputType.visiblePassword,
                         placeholder: "Enter Branch here",
                         enableSuggestions: true,
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
+                        style: TextStyle(color: Colors.white),
                         placeholderStyle: TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
@@ -144,11 +145,11 @@ class _StudentsFormState extends State<StudentsForm> {
                 ),
               ),
               Container(
-                padding: EdgeInsetsDirectional.only(top: 20,start: 30),
+                padding: EdgeInsetsDirectional.only(top: 20, start: 30),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(25),
                   child: Container(
-                    width: getScreenSize(context).width-60,
+                    width: getScreenSize(context).width - 60,
                     height: 60,
                     child: Card(
                       child: CupertinoTextField(
@@ -157,9 +158,7 @@ class _StudentsFormState extends State<StudentsForm> {
                         keyboardType: TextInputType.number,
                         placeholder: "Enter Percentage here",
                         enableSuggestions: true,
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
+                        style: TextStyle(color: Colors.white),
                         placeholderStyle: TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
@@ -171,20 +170,25 @@ class _StudentsFormState extends State<StudentsForm> {
                 ),
               ),
               Container(
-                padding: EdgeInsetsDirectional.only(top: 20,start: 97),
+                padding: EdgeInsetsDirectional.only(top: 20, start: 97),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Container(
                     color: Colors.pink,
                     child: CupertinoButton(
-                      onPressed: (){
-                        setState(() {
-                          saveData();
-                        });
+                      onPressed: () {
+                        saveData();
+                        idCtrl.clear();
+                        percentCtrl.clear();
+                        branchCtrl.clear();
+                        nameCtrl.clear();
                       },
                       color: Colors.pink,
-                      child:Container(
-                        child: Text("ADD",style: TextStyle(color: Colors.white),),
+                      child: Container(
+                        child: Text(
+                          "ADD",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),

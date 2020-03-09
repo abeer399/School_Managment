@@ -18,22 +18,19 @@ class _AddStudentState extends State<AddStudent> {
   TextEditingController ClassCtrl = TextEditingController();
 
   saveData(){
-    final DatabaseReference database = FirebaseDatabase.instance.reference().child("student");
+    final DatabaseReference database = FirebaseDatabase.instance.reference();
     String id = fnameCtrl.text;
     String name = namelCtrl.text;
     String Age = AgeCtrl.text;
     String Fname = fnameCtrl.text;
     String Class= ClassCtrl.text;
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: name, password: Fname).then((value){
-      database.child(value.user.uid).set({
-        "id":value.user.uid,
+     database.child("Add Students").set({
         "name":name,
         "fname":Fname,
         "Age":Age,
-        "Class":ClassCtrl
+        "Class":Class
       });
-      // FirebaseAuth.instance.signInWithEmailAndPassword(email: "admin@gmail.com", password: "admin123");
-    });
+
 
 
 
@@ -181,6 +178,10 @@ class _AddStudentState extends State<AddStudent> {
                       onPressed: (){
                         setState(() {
                           saveData();
+                          namelCtrl.clear();
+                          ClassCtrl.clear();
+                          AgeCtrl.clear();
+                          fnameCtrl.clear();
                         });
                       },
                       color: Colors.pink,
